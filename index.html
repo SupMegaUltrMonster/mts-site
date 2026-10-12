@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>МТС — мобильный оператор</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#" class="logo" aria-label="МТС">
+        <span class="logo__mark">МТС</span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#tariffs" class="nav__link">Тарифы</a>
+        <a href="#services" class="nav__link">Услуги</a>
+        <a href="#about" class="nav__link">О компании</a>
+        <a href="#support" class="nav__link">Поддержка</a>
+      </nav>
+
+      <div class="header__actions">
+        <a href="#support" class="btn btn--ghost">Личный кабинет</a>
+        <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <h1 class="hero__title">Связь, которая работает везде</h1>
+          <p class="hero__text">
+            Подключайте выгодные тарифы МТС, управляйте услугами онлайн
+            и оставайтесь на связи с близкими по всей России.
+          </p>
+          <div class="hero__actions">
+            <a href="#tariffs" class="btn btn--primary">Выбрать тариф</a>
+            <a href="#services" class="btn btn--outline">Все услуги</a>
+          </div>
+        </div>
+        <div class="hero__card">
+          <div class="hero__card-title">Ваш баланс</div>
+          <div class="hero__card-value" id="balance">450 ₽</div>
+          <div class="hero__card-sub">Осталось 12 ГБ и 300 минут</div>
+          <button class="btn btn--primary btn--block" id="topup">Пополнить</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tariffs">
+      <div class="container">
+        <h2 class="section__title">Тарифы</h2>
+        <p class="section__subtitle">Выберите подходящий вариант — от базового до безлимитного</p>
+
+        <div class="tariffs">
+          <article class="tariff">
+            <h3 class="tariff__name">Смарт</h3>
+            <div class="tariff__price">450 <span>₽/мес</span></div>
+            <ul class="tariff__list">
+              <li>15 ГБ интернета</li>
+              <li>400 минут на все сети</li>
+              <li>Безлимит на мессенджеры</li>
+            </ul>
+            <button class="btn btn--outline btn--block" data-tariff="Смарт">Подключить</button>
+          </article>
+
+          <article class="tariff tariff--featured">
+            <div class="tariff__badge">Популярный</div>
+            <h3 class="tariff__name">Смарт+</h3>
+            <div class="tariff__price">650 <span>₽/мес</span></div>
+            <ul class="tariff__list">
+              <li>30 ГБ интернета</li>
+              <li>800 минут на все сети</li>
+              <li>Безлимит на мессенджеры и музыку</li>
+            </ul>
+            <button class="btn btn--primary btn--block" data-tariff="Смарт+">Подключить</button>
+          </article>
+
+          <article class="tariff">
+            <h3 class="tariff__name">Безлимитище</h3>
+            <div class="tariff__price">950 <span>₽/мес</span></div>
+            <ul class="tariff__list">
+              <li>Безлимитный интернет</li>
+              <li>1500 минут на все сети</li>
+              <li>Все сервисы МТС без ограничений</li>
+            </ul>
+            <button class="btn btn--outline btn--block" data-tariff="Безлимитище">Подключить</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <h2 class="section__title">Услуги</h2>
+        <div class="services">
+          <div class="service">
+            <div class="service__icon">📶</div>
+            <h3 class="service__title">Мобильная связь</h3>
+            <p class="service__text">Стабильный сигнал и высокая скорость в любой точке страны.</p>
+          </div>
+          <div class="service">
+            <div class="service__icon">🌐</div>
+            <h3 class="service__title">Домашний интернет</h3>
+            <p class="service__text">Быстрый интернет и ТВ для дома по выгодной цене.</p>
+          </div>
+          <div class="service">
+            <div class="service__icon">📱</div>
+            <h3 class="service__title">Мобильные устройства</h3>
+            <p class="service__text">Смартфоны и гаджеты в рассрочку без переплат.</p>
+          </div>
+          <div class="service">
+            <div class="service__icon">☁️</div>
+            <h3 class="service__title">Облако и сервисы</h3>
+            <p class="service__text">Хранилище, музыка и подписки в одном месте.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="about__text">
+          <h2 class="section__title">О компании</h2>
+          <p>
+            МТС — крупнейший российский оператор связи. Мы обеспечиваем
+            миллионы людей мобильной связью, интернетом и цифровыми сервисами.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat__value">80+ млн</div>
+              <div class="stat__label">абонентов</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value">4G/5G</div>
+              <div class="stat__label">покрытие сети</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value">24/7</div>
+              <div class="stat__label">поддержка</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="support">
+      <div class="container">
+        <h2 class="section__title">Поддержка</h2>
+        <p class="section__subtitle">Оставьте заявку — мы свяжемся с вами</p>
+
+        <form class="form" id="support-form" novalidate>
+          <div class="form__row">
+            <label class="form__label" for="name">Имя</label>
+            <input class="form__input" type="text" id="name" name="name" placeholder="Ваше имя" required>
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="phone">Телефон</label>
+            <input class="form__input" type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="message">Сообщение</label>
+            <textarea class="form__input" id="message" name="message" rows="4" placeholder="Опишите ваш вопрос"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Отправить</button>
+          <p class="form__status" id="form-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="logo__mark">МТС</span>
+        <p>© 2026 МТС. Все права защищены.</p>
+      </div>
+      <div class="footer__links">
+        <a href="#tariffs">Тарифы</a>
+        <a href="#services">Услуги</a>
+        <a href="#about">О компании</a>
+        <a href="#support">Поддержка</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
