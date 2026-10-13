@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="МТС — мобильный оператор: выгодные тарифы, мобильная связь, домашний интернет и цифровые сервисы. Управляйте услугами онлайн.">
   <title>МТС — мобильный оператор</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -22,7 +23,7 @@
 
       <div class="header__actions">
         <a href="#support" class="btn btn--ghost">Личный кабинет</a>
-        <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -43,11 +44,11 @@
             <a href="#services" class="btn btn--outline">Все услуги</a>
           </div>
         </div>
-        <div class="hero__card">
+        <div class="hero__card reveal">
           <div class="hero__card-title">Ваш баланс</div>
           <div class="hero__card-value" id="balance">450 ₽</div>
           <div class="hero__card-sub">Осталось 12 ГБ и 300 минут</div>
-          <button class="btn btn--primary btn--block" id="topup">Пополнить</button>
+          <button class="btn btn--primary btn--block" id="topup" type="button">Пополнить</button>
         </div>
       </div>
     </section>
@@ -58,7 +59,7 @@
         <p class="section__subtitle">Выберите подходящий вариант — от базового до безлимитного</p>
 
         <div class="tariffs">
-          <article class="tariff">
+          <article class="tariff reveal">
             <h3 class="tariff__name">Смарт</h3>
             <div class="tariff__price">450 <span>₽/мес</span></div>
             <ul class="tariff__list">
@@ -66,10 +67,10 @@
               <li>400 минут на все сети</li>
               <li>Безлимит на мессенджеры</li>
             </ul>
-            <button class="btn btn--outline btn--block" data-tariff="Смарт">Подключить</button>
+            <button class="btn btn--outline btn--block" type="button" data-tariff="Смарт">Подключить</button>
           </article>
 
-          <article class="tariff tariff--featured">
+          <article class="tariff tariff--featured reveal">
             <div class="tariff__badge">Популярный</div>
             <h3 class="tariff__name">Смарт+</h3>
             <div class="tariff__price">650 <span>₽/мес</span></div>
@@ -78,10 +79,10 @@
               <li>800 минут на все сети</li>
               <li>Безлимит на мессенджеры и музыку</li>
             </ul>
-            <button class="btn btn--primary btn--block" data-tariff="Смарт+">Подключить</button>
+            <button class="btn btn--primary btn--block" type="button" data-tariff="Смарт+">Подключить</button>
           </article>
 
-          <article class="tariff">
+          <article class="tariff reveal">
             <h3 class="tariff__name">Безлимитище</h3>
             <div class="tariff__price">950 <span>₽/мес</span></div>
             <ul class="tariff__list">
@@ -89,7 +90,7 @@
               <li>1500 минут на все сети</li>
               <li>Все сервисы МТС без ограничений</li>
             </ul>
-            <button class="btn btn--outline btn--block" data-tariff="Безлимитище">Подключить</button>
+            <button class="btn btn--outline btn--block" type="button" data-tariff="Безлимитище">Подключить</button>
           </article>
         </div>
       </div>
@@ -99,22 +100,22 @@
       <div class="container">
         <h2 class="section__title">Услуги</h2>
         <div class="services">
-          <div class="service">
+          <div class="service reveal">
             <div class="service__icon">📶</div>
             <h3 class="service__title">Мобильная связь</h3>
             <p class="service__text">Стабильный сигнал и высокая скорость в любой точке страны.</p>
           </div>
-          <div class="service">
+          <div class="service reveal">
             <div class="service__icon">🌐</div>
             <h3 class="service__title">Домашний интернет</h3>
             <p class="service__text">Быстрый интернет и ТВ для дома по выгодной цене.</p>
           </div>
-          <div class="service">
+          <div class="service reveal">
             <div class="service__icon">📱</div>
             <h3 class="service__title">Мобильные устройства</h3>
             <p class="service__text">Смартфоны и гаджеты в рассрочку без переплат.</p>
           </div>
-          <div class="service">
+          <div class="service reveal">
             <div class="service__icon">☁️</div>
             <h3 class="service__title">Облако и сервисы</h3>
             <p class="service__text">Хранилище, музыка и подписки в одном месте.</p>
@@ -131,9 +132,9 @@
             МТС — крупнейший российский оператор связи. Мы обеспечиваем
             миллионы людей мобильной связью, интернетом и цифровыми сервисами.
           </p>
-          <div class="stats">
+          <div class="stats reveal">
             <div class="stat">
-              <div class="stat__value">80+ млн</div>
+              <div class="stat__value" data-count="80" data-suffix="+ млн">80+ млн</div>
               <div class="stat__label">абонентов</div>
             </div>
             <div class="stat">
@@ -154,7 +155,7 @@
         <h2 class="section__title">Поддержка</h2>
         <p class="section__subtitle">Оставьте заявку — мы свяжемся с вами</p>
 
-        <form class="form" id="support-form" novalidate>
+        <form class="form reveal" id="support-form" novalidate>
           <div class="form__row">
             <label class="form__label" for="name">Имя</label>
             <input class="form__input" type="text" id="name" name="name" placeholder="Ваше имя" required>
@@ -190,6 +191,12 @@
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Наверх">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 19V5M12 5l-7 7M12 5l7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
   <script src="script.js"></script>
 </body>
