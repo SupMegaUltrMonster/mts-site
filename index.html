@@ -23,6 +23,7 @@
 
       <div class="header__actions">
         <a href="#account" class="btn btn--ghost" id="account-link">Личный кабинет</a>
+        <button class="btn btn--ghost" id="register-btn" type="button">Регистрация</button>
         <button class="btn btn--primary" id="login-btn" type="button">Войти</button>
         <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -47,7 +48,45 @@
         </div>
         <button type="submit" class="btn btn--primary btn--block">Войти</button>
         <p class="form__status" id="login-status" role="status"></p>
+        <p class="form__switch">Нет аккаунта? <button type="button" id="switch-to-register" class="form__link">Зарегистрироваться</button></p>
       </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal" id="register-modal" role="dialog" aria-modal="true" aria-labelledby="register-title">
+    <div class="modal__content">
+      <button class="modal__close" id="register-close" aria-label="Закрыть">×</button>
+      <h2 class="modal__title" id="register-title">Регистрация</h2>
+      <form id="register-form">
+        <div class="form__row">
+          <label class="form__label" for="register-login">Логин</label>
+          <input class="form__input" type="text" id="register-login" name="register-login" placeholder="Придумайте логин" required minlength="3">
+        </div>
+        <div class="form__row">
+          <label class="form__label" for="register-password">Пароль</label>
+          <input class="form__input" type="password" id="register-password" name="register-password" placeholder="Придумайте пароль" required minlength="6">
+        </div>
+        <div class="form__row">
+          <label class="form__label" for="register-confirm">Подтвердите пароль</label>
+          <input class="form__input" type="password" id="register-confirm" name="register-confirm" placeholder="Повторите пароль" required>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Зарегистрироваться</button>
+        <p class="form__status" id="register-status" role="status"></p>
+        <p class="form__switch">Уже есть аккаунт? <button type="button" id="switch-to-login" class="form__link">Войти</button></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth Overlay -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-overlay__content">
+      <h2 class="auth-overlay__title">Добро пожаловать в МТС</h2>
+      <p class="auth-overlay__text">Для доступа к сайту необходимо войти или зарегистрироваться</p>
+      <div class="auth-overlay__actions">
+        <button class="btn btn--primary" id="overlay-login-btn" type="button">Войти</button>
+        <button class="btn btn--outline" id="overlay-register-btn" type="button">Зарегистрироваться</button>
+      </div>
     </div>
   </div>
 

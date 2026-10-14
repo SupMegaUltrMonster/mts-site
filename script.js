@@ -101,16 +101,26 @@
 
   /* ---------- Login / account ---------- */
   const loginBtn = document.getElementById("login-btn");
+  const registerBtn = document.getElementById("register-btn");
   const loginModal = document.getElementById("login-modal");
+  const registerModal = document.getElementById("register-modal");
   const loginClose = document.getElementById("login-close");
+  const registerClose = document.getElementById("register-close");
   const loginForm = document.getElementById("login-form");
+  const registerForm = document.getElementById("register-form");
   const loginStatus = document.getElementById("login-status");
+  const registerStatus = document.getElementById("register-status");
   const accountLink = document.getElementById("account-link");
   const accountSection = document.getElementById("account");
   const accountUser = document.getElementById("account-user");
   const accountBalance = document.getElementById("account-balance");
   const accountTariffsList = document.getElementById("account-tariffs-list");
   const logoutBtn = document.getElementById("logout-btn");
+  const switchToRegister = document.getElementById("switch-to-register");
+  const switchToLogin = document.getElementById("switch-to-login");
+  const authOverlay = document.getElementById("auth-overlay");
+  const overlayLoginBtn = document.getElementById("overlay-login-btn");
+  const overlayRegisterBtn = document.getElementById("overlay-register-btn");
 
   let currentUser = loadSession();
   if (currentUser && !Object.prototype.hasOwnProperty.call(loadUsers(), currentUser)) {
@@ -118,34 +128,70 @@
     saveSession(null);
   }
 
-  function openModal() {
-    if (!loginModal) return;
-    loginStatus.textContent = "";
-    loginStatus.className = "form__status";
-    loginModal.classList.add("modal--open");
+  function openModal(modal) {
+    if (!modal) return;
+    modal.classList.add("modal--open");
     document.body.classList.add("no-scroll");
-    document.getElementById("login").focus();
   }
 
-  function closeModal() {
-    if (!loginModal) return;
-    loginModal.classList.remove("modal--open");
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove("modal--open");
     document.body.classList.remove("no-scroll");
+  }
+
+  function openLoginModal() {
+    if (loginStatus) {
+      loginStatus.textContent = "";
+      loginStatus.className = "form__status";
+    }
+    closeModal(registerModal);
+    openModal(loginModal);
+    const loginInput = document.getElementById("login");
+    if (loginInput) loginInput.focus();
+  }
+
+  function openRegisterModal() {
+    if (registerStatus) {
+      registerStatus.textContent = "";
+      registerStatus.className = "form__status";
+    }
+    closeModal(loginModal);
+    openModal(registerModal);
+    const registerLoginInput = document.getElementById("register-login");
+    if (registerLoginInput) registerLoginInput.focus();
+  }
+
+  function closeAllModals() {
+    closeModal(loginModal);
+    closeModal(registerModal);
+  }
+
+  function checkAuth() {
+    if (!currentUser && authOverlay) {
+      authOverlay.hidden = false;
+    } else if (authOverlay) {
+      authOverlay.hidden = true;
+    }
   }
 
   function renderAccount() {
     if (!currentUser) {
       if (accountSection) accountSection.style.display = "none";
       if (loginBtn) loginBtn.hidden = false;
+      if (registerBtn) registerBtn.hidden = false;
+      checkAuth();
       return;
     }
     const user = loadUsers()[currentUser];
     if (!user) return;
 
     if (loginBtn) loginBtn.hidden = true;
+    if (registerBtn) registerBtn.hidden = true;
     if (accountSection) accountSection.style.display = "block";
     if (accountUser) accountUser.textContent = "Логин: " + currentUser;
     if (accountBalance) accountBalance.textContent = user.balance + " ₽";
+    checkAuth();
 
     if (accountTariffsList) {
       accountTariffsList.innerHTML = "";
@@ -183,31 +229,70 @@
   }
 
   if (loginBtn) {
-    loginBtn.addEventListener("click", openModal);
+    loginBtn.addEventListener("click", openLoginModal);
+  }
+
+  if (registerBtn) {
+    registerBtn.addEventListener("click", openRegisterModal);
+  }
+
+  if (overlayLoginBtn) {
+    overlayLoginBtn.addEventListener("click", openLoginModal);
+  }
+
+  if (overlayRegisterBtn) {
+    overlayRegisterBtn.addEventListener("click", openRegisterModal);
   }
 
   if (accountLink) {
     accountLink.addEventListener("click", function (event) {
       if (!currentUser) {
         event.preventDefault();
-        openModal();
+        openLoginModal();
       }
     });
   }
 
   if (loginClose) {
-    loginClose.addEventListener("click", closeModal);
+    loginClose.addEventListener("click", function () {
+      closeModal(loginModal);
+    });
+  }
+
+  if (registerClose) {
+    registerClose.addEventListener("click", function () {
+      closeModal(registerModal);
+    });
+  }
+
+  if (switchToRegister) {
+    switchToRegister.addEventListener("click", openRegisterModal);
+  }
+
+  if (switchToLogin) {
+    switchToLogin.addEventListener("click", openLoginModal);
   }
 
   if (loginModal) {
     loginModal.addEventListener("click", function (event) {
-      if (event.target === loginModal) closeModal();
+      if (event.target === loginModal) closeModal(loginModal);
+    });
+  }
+
+  if (registerModal) {
+    registerModal.addEventListener("click", function (event) {
+      if (event.target === registerModal) closeModal(registerModal);
     });
   }
 
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && loginModal && loginModal.classList.contains("modal--open")) {
-      closeModal();
+    if (event.key === "Escape") {
+      if (loginModal && loginModal.classList.contains("modal--open")) {
+        closeModal(loginModal);
+      }
+      if (registerModal && registerModal.classList.contains("modal--open")) {
+        closeModal(registerModal);
+      }
     }
   });
 
@@ -228,9 +313,52 @@
       currentUser = login;
       saveSession(login);
       loginForm.reset();
-      closeModal();
+      closeModal(loginModal);
       renderAccount();
       showToast("Добро пожаловать, " + login + "!");
+    });
+  }
+
+  if (registerForm && registerStatus) {
+    registerForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const login = registerForm.elements["register-login"].value.trim();
+      const password = registerForm.elements["register-password"].value;
+      const confirm = registerForm.elements["register-confirm"].value;
+
+      if (login.length < 3) {
+        registerStatus.textContent = "Логин должен содержать минимум 3 символа";
+        registerStatus.className = "form__status form__status--error";
+        return;
+      }
+
+      if (password.length < 6) {
+        registerStatus.textContent = "Пароль должен содержать минимум 6 символов";
+        registerStatus.className = "form__status form__status--error";
+        return;
+      }
+
+      if (password !== confirm) {
+        registerStatus.textContent = "Пароли не совпадают";
+        registerStatus.className = "form__status form__status--error";
+        return;
+      }
+
+      const users = loadUsers();
+      if (Object.prototype.hasOwnProperty.call(users, login)) {
+        registerStatus.textContent = "Пользователь с таким логином уже существует";
+        registerStatus.className = "form__status form__status--error";
+        return;
+      }
+
+      users[login] = { password: password, balance: 450, tariffs: [] };
+      saveUsers(users);
+      currentUser = login;
+      saveSession(login);
+      registerForm.reset();
+      closeModal(registerModal);
+      renderAccount();
+      showToast("Регистрация успешна! Добро пожаловать, " + login + "!");
     });
   }
 
@@ -251,7 +379,6 @@
 
       if (!currentUser) {
         showToast("Войдите в личный кабинет, чтобы подключить тариф");
-        openModal();
         return;
       }
 
@@ -285,6 +412,7 @@
   });
 
   renderAccount();
+  checkAuth();
 
   /* ---------- Top-up button ---------- */
   const topup = document.getElementById("topup");

@@ -569,6 +569,71 @@ body.no-scroll {
   color: var(--mts-red);
 }
 
+.form__switch {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.form__link {
+  background: none;
+  border: none;
+  color: var(--mts-red);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.form__link:hover {
+  color: var(--mts-red-dark);
+}
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 400;
+}
+
+.auth-overlay[hidden] {
+  display: none;
+}
+
+.auth-overlay__content {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 48px 40px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.auth-overlay__title {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.auth-overlay__text {
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  font-size: 16px;
+}
+
+.auth-overlay__actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* Personal account */
 .section--account {
   background: var(--bg-alt);
