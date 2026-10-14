@@ -22,13 +22,63 @@
       </nav>
 
       <div class="header__actions">
-        <a href="#support" class="btn btn--ghost">Личный кабинет</a>
+        <a href="#account" class="btn btn--ghost" id="account-link">Личный кабинет</a>
+        <button class="btn btn--primary" id="login-btn" type="button">Войти</button>
         <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </header>
+
+  <!-- Login Modal -->
+  <div class="modal" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="modal__content">
+      <button class="modal__close" id="login-close" aria-label="Закрыть">×</button>
+      <h2 class="modal__title" id="login-title">Вход в личный кабинет</h2>
+      <form id="login-form">
+        <div class="form__row">
+          <label class="form__label" for="login">Логин</label>
+          <input class="form__input" type="text" id="login" name="login" placeholder="Введите логин" required>
+        </div>
+        <div class="form__row">
+          <label class="form__label" for="password">Пароль</label>
+          <input class="form__input" type="password" id="password" name="password" placeholder="Введите пароль" required>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Войти</button>
+        <p class="form__status" id="login-status" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Account Section -->
+  <section class="section section--account" id="account" style="display: none;">
+    <div class="container">
+      <div class="account">
+        <div class="account__header">
+          <div>
+            <h2 class="section__title">Личный кабинет</h2>
+            <p class="account__user" id="account-user"></p>
+          </div>
+          <button class="btn btn--outline" id="logout-btn" type="button">Выйти</button>
+        </div>
+
+        <div class="account__balance hero__card">
+          <div class="hero__card-title">Ваш баланс</div>
+          <div class="hero__card-value" id="account-balance">0 ₽</div>
+          <div class="hero__card-sub">Осталось 0 ГБ и 0 минут</div>
+          <button class="btn btn--primary btn--block" id="topup" type="button">Пополнить</button>
+        </div>
+
+        <div class="account__tariffs">
+          <h3 class="account__tariffs-title">Подключенные тарифы</h3>
+          <div class="account__tariffs-list" id="account-tariffs-list">
+            <!-- Tariffs will be added here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <main>
     <section class="hero">

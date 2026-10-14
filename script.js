@@ -56,13 +56,235 @@
     });
   }
 
-  /* ---------- Tariff buttons ---------- */
+  /* ---------- Accounts storage ---------- */
+  const USERS_KEY = "mts_users";
+  const SESSION_KEY = "mts_session";
+
+  function loadUsers() {
+    try {
+      const raw = localStorage.getItem(USERS_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {
+      /* ignore broken storage */
+    }
+    const seed = {
+      demo: { password: "demo123", balance: 450, tariffs: [] }
+    };
+    saveUsers(seed);
+    return seed;
+  }
+
+  function saveUsers(users) {
+    try {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    } catch (e) {
+      showToast("Не удалось сохранить данные");
+    }
+  }
+
+  function loadSession() {
+    try {
+      return localStorage.getItem(SESSION_KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveSession(login) {
+    try {
+      if (login) localStorage.setItem(SESSION_KEY, login);
+      else localStorage.removeItem(SESSION_KEY);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  /* ---------- Login / account ---------- */
+  const loginBtn = document.getElementById("login-btn");
+  const loginModal = document.getElementById("login-modal");
+  const loginClose = document.getElementById("login-close");
+  const loginForm = document.getElementById("login-form");
+  const loginStatus = document.getElementById("login-status");
+  const accountLink = document.getElementById("account-link");
+  const accountSection = document.getElementById("account");
+  const accountUser = document.getElementById("account-user");
+  const accountBalance = document.getElementById("account-balance");
+  const accountTariffsList = document.getElementById("account-tariffs-list");
+  const logoutBtn = document.getElementById("logout-btn");
+
+  let currentUser = loadSession();
+  if (currentUser && !Object.prototype.hasOwnProperty.call(loadUsers(), currentUser)) {
+    currentUser = null;
+    saveSession(null);
+  }
+
+  function openModal() {
+    if (!loginModal) return;
+    loginStatus.textContent = "";
+    loginStatus.className = "form__status";
+    loginModal.classList.add("modal--open");
+    document.body.classList.add("no-scroll");
+    document.getElementById("login").focus();
+  }
+
+  function closeModal() {
+    if (!loginModal) return;
+    loginModal.classList.remove("modal--open");
+    document.body.classList.remove("no-scroll");
+  }
+
+  function renderAccount() {
+    if (!currentUser) {
+      if (accountSection) accountSection.style.display = "none";
+      if (loginBtn) loginBtn.hidden = false;
+      return;
+    }
+    const user = loadUsers()[currentUser];
+    if (!user) return;
+
+    if (loginBtn) loginBtn.hidden = true;
+    if (accountSection) accountSection.style.display = "block";
+    if (accountUser) accountUser.textContent = "Логин: " + currentUser;
+    if (accountBalance) accountBalance.textContent = user.balance + " ₽";
+
+    if (accountTariffsList) {
+      accountTariffsList.innerHTML = "";
+      if (!user.tariffs.length) {
+        const empty = document.createElement("p");
+        empty.className = "account__empty";
+        empty.textContent = "Нет подключённых тарифов";
+        accountTariffsList.appendChild(empty);
+      }
+      user.tariffs.forEach(function (tariff) {
+        const row = document.createElement("div");
+        row.className = "account__tariff";
+
+        const name = document.createElement("div");
+        name.className = "account__tariff-name";
+        name.textContent = tariff.name;
+
+        const meta = document.createElement("div");
+        meta.className = "account__tariff-meta";
+        meta.textContent = "Подключён " + tariff.date;
+
+        const price = document.createElement("div");
+        price.className = "account__tariff-price";
+        price.textContent = tariff.price + " ₽/мес";
+
+        const info = document.createElement("div");
+        info.appendChild(name);
+        info.appendChild(meta);
+
+        row.appendChild(info);
+        row.appendChild(price);
+        accountTariffsList.appendChild(row);
+      });
+    }
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", openModal);
+  }
+
+  if (accountLink) {
+    accountLink.addEventListener("click", function (event) {
+      if (!currentUser) {
+        event.preventDefault();
+        openModal();
+      }
+    });
+  }
+
+  if (loginClose) {
+    loginClose.addEventListener("click", closeModal);
+  }
+
+  if (loginModal) {
+    loginModal.addEventListener("click", function (event) {
+      if (event.target === loginModal) closeModal();
+    });
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && loginModal && loginModal.classList.contains("modal--open")) {
+      closeModal();
+    }
+  });
+
+  if (loginForm && loginStatus) {
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const login = loginForm.elements.login.value.trim();
+      const password = loginForm.elements.password.value;
+      const users = loadUsers();
+      const exists = Object.prototype.hasOwnProperty.call(users, login);
+
+      if (!exists || users[login].password !== password) {
+        loginStatus.textContent = "Неверный логин или пароль";
+        loginStatus.className = "form__status form__status--error";
+        return;
+      }
+
+      currentUser = login;
+      saveSession(login);
+      loginForm.reset();
+      closeModal();
+      renderAccount();
+      showToast("Добро пожаловать, " + login + "!");
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+      currentUser = null;
+      saveSession(null);
+      renderAccount();
+      showToast("Вы вышли из личного кабинета");
+    });
+  }
+
+  /* ---------- Tariff buttons (subscribe with charge) ---------- */
   const tariffButtons = document.querySelectorAll("[data-tariff]");
   tariffButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-      showToast('Тариф "' + button.getAttribute("data-tariff") + '" подключён');
+      const name = button.getAttribute("data-tariff");
+
+      if (!currentUser) {
+        showToast("Войдите в личный кабинет, чтобы подключить тариф");
+        openModal();
+        return;
+      }
+
+      const card = button.closest(".tariff");
+      const priceEl = card ? card.querySelector(".tariff__price") : null;
+      const price = priceEl ? parseInt(priceEl.textContent.replace(/\D/g, ""), 10) : 0;
+
+      const users = loadUsers();
+      const user = users[currentUser];
+
+      if (user.tariffs.some(function (t) { return t.name === name; })) {
+        showToast('Тариф "' + name + '" уже подключён');
+        return;
+      }
+
+      if (user.balance < price) {
+        showToast("Недостаточно средств для подключения тарифа");
+        return;
+      }
+
+      user.balance -= price;
+      user.tariffs.push({
+        name: name,
+        price: price,
+        date: new Date().toLocaleDateString("ru-RU")
+      });
+      saveUsers(users);
+      renderAccount();
+      showToast('Тариф "' + name + '" подключён, списано ' + price + " ₽");
     });
   });
+
+  renderAccount();
 
   /* ---------- Top-up button ---------- */
   const topup = document.getElementById("topup");

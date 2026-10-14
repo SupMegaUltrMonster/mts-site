@@ -517,6 +517,124 @@ body.no-scroll {
   color: #fff;
 }
 
+/* Hidden attribute must win over .btn display */
+[hidden] {
+  display: none !important;
+}
+
+/* Login modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 300;
+}
+
+.modal--open {
+  display: flex;
+}
+
+.modal__content {
+  position: relative;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal__title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal__close:hover {
+  color: var(--mts-red);
+}
+
+/* Personal account */
+.section--account {
+  background: var(--bg-alt);
+  padding: 50px 0;
+}
+
+.account__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.account__header .section__title {
+  margin-bottom: 4px;
+}
+
+.account__user {
+  color: var(--text-muted);
+}
+
+.account__balance {
+  max-width: 420px;
+  margin-bottom: 36px;
+}
+
+.account__tariffs-title {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.account__tariffs-list {
+  display: grid;
+  gap: 14px;
+}
+
+.account__tariff {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.account__tariff-name {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.account__tariff-meta,
+.account__empty {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.account__tariff-price {
+  font-weight: 800;
+  color: var(--mts-red);
+  white-space: nowrap;
+}
+
 /* Toast */
 .toast {
   position: fixed;
