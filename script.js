@@ -578,4 +578,12 @@
       spyObserver.observe(section);
     });
   }
+
+  /* ---------- Dynamic Banner ---------- */
+  const banner = document.getElementById("banner");
+  if (banner) {
+    setTimeout(function () {
+      banner.classList.add("banner--visible");
+    }, 300);
+  }
 })();
