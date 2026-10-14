@@ -809,7 +809,7 @@ body.no-scroll {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1000;
   opacity: 0;
   transform: translateY(30px);
   transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
