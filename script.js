@@ -147,6 +147,7 @@
     }
     closeModal(registerModal);
     openModal(loginModal);
+    if (authOverlay) authOverlay.hidden = true;
     const loginInput = document.getElementById("login");
     if (loginInput) loginInput.focus();
   }
@@ -158,6 +159,7 @@
     }
     closeModal(loginModal);
     openModal(registerModal);
+    if (authOverlay) authOverlay.hidden = true;
     const registerLoginInput = document.getElementById("register-login");
     if (registerLoginInput) registerLoginInput.focus();
   }
