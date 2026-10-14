@@ -760,8 +760,10 @@ body.no-scroll {
     display: flex;
   }
 
-  .btn--ghost {
-    display: none;
+  .header-btn {
+    display: inline-flex;
+    font-size: 13px;
+    padding: 8px 14px;
   }
 
   .hero__title {
