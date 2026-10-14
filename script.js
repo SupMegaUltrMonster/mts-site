@@ -581,9 +581,11 @@
 
   /* ---------- Dynamic Banner ---------- */
   const banner = document.getElementById("banner");
+  const body = document.body;
   if (banner) {
     setTimeout(function () {
       banner.classList.add("banner--visible");
+      if (body) body.classList.add("banner-visible");
     }, 300);
   }
 })();
