@@ -582,10 +582,43 @@
   /* ---------- Dynamic Banner ---------- */
   const banner = document.getElementById("banner");
   const body = document.body;
+  const bannerTexts = [
+    { title: "МТС — Ваш мир связи", sub: "Выгодные тарифы, стабильная связь и цифровые сервисы" },
+    { title: "МТС — Скорость, которая вдохновляет", sub: "Интернет до 500 Мбит/с и безлимитные звонки" },
+    { title: "МТС — Связь без границ", sub: "Роуминг в 100+ странах и выгодные тарифы" },
+    { title: "МТС — Цифровой мир в вашем смартфоне", sub: "Музыка, видео и облако в одном приложении" },
+    { title: "МТС — Надежная связь везде", sub: "Покрытие 4G/5G по всей России" }
+  ];
+  let currentTextIndex = 0;
+
   if (banner) {
     setTimeout(function () {
       banner.classList.add("banner--visible");
       if (body) body.classList.add("banner-visible");
     }, 300);
+  }
+
+  function updateBannerText() {
+    const text = bannerTexts[currentTextIndex];
+    const titleEl = banner ? banner.querySelector(".banner__text") : null;
+    const subEl = banner ? banner.querySelector(".banner__sub") : null;
+
+    if (titleEl && subEl) {
+      titleEl.style.opacity = "0";
+      subEl.style.opacity = "0";
+
+      setTimeout(function () {
+        titleEl.textContent = text.title;
+        subEl.textContent = text.sub;
+        titleEl.style.opacity = "1";
+        subEl.style.opacity = "1";
+      }, 400);
+    }
+
+    currentTextIndex = (currentTextIndex + 1) % bannerTexts.length;
+  }
+
+  if (banner && bannerTexts.length > 1) {
+    setInterval(updateBannerText, 5000);
   }
 })();
