@@ -811,6 +811,8 @@ body.no-scroll {
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 14px),
     linear-gradient(135deg, #e30611 0%, #b8050d 60%, #8a0409 100%);
   background-size: 100% 100%, 100% 100%, auto, 100% 100%;
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -820,34 +822,22 @@ body.no-scroll {
   transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.banner--visible {
-  opacity: 1;
-  transform: translateY(0);
+.banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.banner__text {
-  font-size: 1.5rem;
-  color: #fff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  letter-spacing: 1px;
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
+.banner__text,
 .banner__sub {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Body padding when banner is visible */
-body.banner-visible {
-  padding-top: 80px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Back to top */
