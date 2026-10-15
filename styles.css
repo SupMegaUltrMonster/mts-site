@@ -47,6 +47,21 @@ body.no-scroll {
 }
 
 /* Header */
+.promo-banner {
+  background: linear-gradient(135deg, var(--mts-red) 0%, var(--mts-red-dark) 100%);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1001;
+  position: relative;
+}
+
+.promo-banner p {
+  margin: 0;
+  font-weight: 500;
+}
+
 .header {
   position: sticky;
   top: 0;
